@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans&family=Poppins&display=swap');
 
 :root {
   --primary: #fff;
@@ -8,6 +8,10 @@
   --dark-accent: #111827;
   --dark-lighter-accent: #3d4d63;
   --light-blue: #7da9e6;
+
+  /* Button Color */
+  --btn-pause: rgb(223, 223, 2);
+  --btn-reset: rgb(126, 122, 122);
 }
 
 *,
@@ -15,7 +19,8 @@
 *:after {
   box-sizing: border-box;
   margin: 0;
-  font-family: 'Fira sans', sans-serif;
+  padding: 0;
+  font-family: 'Roboto mono', monospace;
 }
 
 body {
@@ -24,44 +29,44 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  font-family: sans-serif;
 }
 
 .container {
-  background-color: #a9c5d9;
+  background-color: var(--primary);
   border-radius: 16px;
-  padding: 20px;
+  padding: 20px 10px;
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.watch {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-}
+/* Time Display */
 
-.time {
-  font-size: 4rem;
-  background-color: var(--dark-accent);
+.timeDisplay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Roboto mono', monospace;
+  font-size: 3.5rem;
+  font-weight: 300;
   color: var(--light-blue);
-  padding: 1rem 2rem;
+  margin-bottom: 1rem;
   border-radius: 1rem;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px rgba(0, 139, 253, 0.25);
 }
 
-.time span {
+.timeDisplay span {
   width: 110px;
   display: inline-block;
+  font-size: 40px;
   text-align: center;
 }
 
+/* Buttons */
+
 .controls {
-  display: flex;
-  gap: 1rem;
+  margin: 20px auto 20px auto;
 }
 
 button {
@@ -70,14 +75,45 @@ button {
   background-color: var(--dark);
   color: var(--primary);
   border: none;
+  font-family: 'Poppins', sans-serif;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
 }
 
-button:hover {
-  background-color: var(--dark-lighter-accent);
+.startBtn {
+  background-color: var(--light-blue);
 }
+
+.startBtn:hover {
+  background-color: rgba(0, 0, 255, 0.3);
+}
+
+.stopBtn {
+  background-color: var(--tertiary);
+}
+
+.stopBtn:hover {
+  background-color: rgba(255, 0, 0, 0.3);
+}
+
+.pauseBtn {
+  background-color: var(--btn-pause);
+}
+
+.pauseBtn:hover {
+  background-color: rgb(239, 239, 17);
+}
+
+.resetBtn {
+  background-color: var(--btn-reset);
+}
+
+.resetBtn:hover {
+  background-color: rgb(197, 179, 179);
+}
+
+/* Detail list */
 
 .details-heading {
   color: var(--dark-accent);
@@ -102,7 +138,7 @@ ul {
 
 li {
   padding: 1rem;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--light-blue);
 }
 
 li:last-child {
