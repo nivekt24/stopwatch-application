@@ -78,39 +78,27 @@ button {
   font-family: 'Poppins', sans-serif;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .startBtn {
   background-color: var(--light-blue);
 }
 
-.startBtn:hover {
-  background-color: rgba(0, 0, 255, 0.3);
-}
-
 .stopBtn {
   background-color: var(--tertiary);
-}
-
-.stopBtn:hover {
-  background-color: rgba(255, 0, 0, 0.3);
 }
 
 .pauseBtn {
   background-color: var(--btn-pause);
 }
 
-.pauseBtn:hover {
-  background-color: rgb(239, 239, 17);
-}
-
 .resetBtn {
   background-color: var(--btn-reset);
 }
 
-.resetBtn:hover {
-  background-color: rgb(197, 179, 179);
+button:hover {
+  filter: brightness(110%);
 }
 
 /* Detail list */
@@ -147,4 +135,33 @@ li:last-child {
 
 li span {
   font-weight: 700;
+}
+
+@media screen and (max-width: 600px) {
+  .container {
+    width: 95%;
+  }
+
+  .timeDisplay {
+    width: 95%;
+  }
+
+  .controls {
+    display: flex;
+    gap: 5px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .timeDisplay {
+    font-size: 20px;
+  }
+
+  button {
+    font-size: 0.75rem;
+  }
+
+  .details-heading {
+    font-size: 1rem;
+  }
 }
