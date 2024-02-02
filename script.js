@@ -1,100 +1,107 @@
-//Global variables
-const hoursEl = document.getElementById('hours');
-const minutesEl = document.getElementById('minutes');
-const secondsEl = document.getElementById('seconds');
-const millisecondsEl = document.getElementById('milliseconds');
+class Timer {
+  constructor() {
+    // Global variables
+    this.hoursEl = document.getElementById('hours');
+    this.minutesEl = document.getElementById('minutes');
+    this.secondsEl = document.getElementById('seconds');
+    this.millisecondsEl = document.getElementById('milliseconds');
 
-const startButton = document.getElementById('startBtn');
-const stopButton = document.getElementById('stopBtn');
-const pauseButton = document.getElementById('pauseBtn');
-const resetButton = document.getElementById('resetBtn');
+    this.startButton = document.getElementById('startBtn');
+    this.stopButton = document.getElementById('stopBtn');
+    this.pauseButton = document.getElementById('pauseBtn');
+    this.resetButton = document.getElementById('resetBtn');
 
-const lapList = document.getElementById('details-list');
+    this.lapList = document.getElementById('details-list');
 
-let hours = 0;
-let minutes = 0;
-let seconds = 0;
-let milliseconds = 0;
-let interval;
+    this.hours = 0;
+    this.minutes = 0;
+    this.seconds = 0;
+    this.milliseconds = 0;
+    this.interval = null;
 
-// Event listeners
-startButton.addEventListener('click', startTimer);
-stopButton.addEventListener('click', stopTimer);
-pauseButton.addEventListener('click', pauseTimer);
-resetButton.addEventListener('click', resetTimer);
-
-// Update the timer
-function startTimer() {
-  interval = setInterval(updateTimer, 10);
-  startButton.disabled = true;
-}
-
-function stopTimer() {
-  clearInterval(interval);
-  addToLapList();
-  resetTimerData();
-  startButton.disabled = false;
-}
-
-function pauseTimer() {
-  clearInterval(interval);
-  startButton.disabled = false;
-}
-
-function resetTimer() {
-  clearInterval(interval);
-  resetTimerData();
-  startButton.disabled = false;
-}
-
-function updateTimer() {
-  milliseconds += 10;
-
-  if (milliseconds == 1000) {
-    milliseconds = 0;
-    seconds++;
-
-    if (seconds == 60) {
-      seconds = 0;
-      minutes++;
-
-      if (minutes == 60) {
-        minutes = 0;
-        hours++;
-      }
-    }
+    // Event listeners
+    this.startButton.addEventListener('click', this.startTimer.bind(this));
+    this.stopButton.addEventListener('click', this.stopTimer.bind(this));
+    this.pauseButton.addEventListener('click', this.pauseTimer.bind(this));
+    this.resetButton.addEventListener('click', this.resetTimer.bind(this));
   }
 
-  displayTimer();
+  // Update the timer
+  startTimer() {
+    this.interval = setInterval(this.updateTimer.bind(this), 10);
+    this.startButton.disabled = true;
+  }
+
+  stopTimer() {
+    clearInterval(this.interval);
+    this.addToLapList();
+    this.resetTimerData();
+    this.startButton.disabled = false;
+  }
+
+  pauseTimer() {
+    clearInterval(this.interval);
+    this.startButton.disabled = false;
+  }
+
+  resetTimer() {
+    clearInterval(this.interval);
+    this.resetTimerData();
+    this.startButton.disabled = false;
+  }
+
+  updateTimer() {
+    this.milliseconds += 10;
+
+    if (this.milliseconds === 1000) {
+      this.milliseconds = 0;
+      this.seconds++;
+
+      if (this.seconds === 60) {
+        this.seconds = 0;
+        this.minutes++;
+
+        if (this.minutes === 60) {
+          this.minutes = 0;
+          this.hours++;
+        }
+      }
+    }
+
+    this.displayTimer();
+  }
+
+  displayTimer() {
+    this.millisecondsEl.textContent = this.padTime(this.milliseconds);
+    this.secondsEl.textContent = this.padTime(this.seconds);
+    this.minutesEl.textContent = this.padTime(this.minutes);
+    this.hoursEl.textContent = this.padTime(this.hours);
+  }
+
+  padTime(time) {
+    return time.toString().padStart(2, '0');
+  }
+
+  resetTimerData() {
+    this.hours = 0;
+    this.minutes = 0;
+    this.seconds = 0;
+    this.milliseconds = 0;
+    this.displayTimer();
+  }
+
+  addToLapList() {
+    const lapTime = `${this.padTime(this.hours)}:${this.padTime(
+      this.minutes
+    )}:${this.padTime(this.seconds)}:${this.padTime(this.milliseconds)}`;
+
+    const listItem = document.createElement('li');
+    listItem.innerHTML = `<span>Lap ${
+      this.lapList.childElementCount + 1
+    }: </span>${lapTime}`;
+    this.lapList.appendChild(listItem);
+  }
 }
 
-function displayTimer() {
-  millisecondsEl.textContent = padTime(milliseconds);
-  secondsEl.textContent = padTime(seconds);
-  minutesEl.textContent = padTime(minutes);
-  hoursEl.textContent = padTime(hours);
-}
-
-function padTime(time) {
-  return time.toString().padStart(2, '0');
-}
-
-function resetTimerData() {
-  hours = 0;
-  minutes = 0;
-  seconds = 0;
-  milliseconds = 0;
-  displayTimer();
-}
-
-function addToLapList() {
-  const lapTime = `${padTime(hours)}:${padTime(minutes)}:${padTime(
-    seconds
-  )}:${padTime(milliseconds)}`;
-
-  const listItem = document.createElement('li');
-  listItem.innerHTML = `<span>Lap ${
-    lapList.childElementCount + 1
-  }: </span>${lapTime}`;
-  lapList.appendChild(listItem);
-}
+// Instantiate the Timer class
+const timer = new Timer();
